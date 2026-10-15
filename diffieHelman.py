@@ -1,5 +1,6 @@
 import random
 
+
 class DiffieHelman():
 
     def __init__(self, g, p):

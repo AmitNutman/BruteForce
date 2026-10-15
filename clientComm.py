@@ -5,6 +5,7 @@ from AES import AESCipher
 import time
 
 
+
 class ClientComm():
     def __init__(self, serverIp, port, recvQ):
         """

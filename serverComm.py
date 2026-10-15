@@ -6,7 +6,6 @@ from AES import AESCipher
 
 
 
-
 class ServerComm():
     def __init__(self, port, recvQ):
         """
