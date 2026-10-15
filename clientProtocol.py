@@ -5,8 +5,22 @@ def unpack(data):
     :return: tuple (opcode, params)
     """
     opcode = data[0:1].decode()
-    if opcode in ["4", "I"]:
-        params = data[1:].split(b"#!#", 1)
-    else:
-        params = data[1:].decode().split("#!#")
+    params = data.decode().split("#!#")[1:]
     return (opcode, params)
+
+
+def pack_right_answer(answer):
+    """
+
+    :return:
+    """
+    return f"2#!#{answer}"
+
+
+
+def pack_request_for_more():
+    """
+
+    :return:
+    """
+    return "1"
