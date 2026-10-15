@@ -19,8 +19,8 @@ def request_for_new_range_to_check(ip, comm, params, current_range):
         current_range[0] = current_range[0] + 100000000
 
 def found_correct_answer(ip, comm, answer, current_range):
-    if hashlib.md5(str(answer).encode()).hexdigest() == "EC9C0F7EDCC18A98B1F31853B1813301".lower():
-        print(answer)
+    if hashlib.md5(answer[0].encode()).hexdigest() == "EC9C0F7EDCC18A98B1F31853B1813301".lower():
+        print(answer[0])
 
 commands = {}
 commands['1'] = request_for_new_range_to_check

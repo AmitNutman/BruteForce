@@ -4,7 +4,6 @@ import queue
 from clientComm import ClientComm
 import clientProtocol
 import hashlib
-import threading
 
 
 
@@ -17,7 +16,7 @@ def communicate_with_server():
     comm = ClientComm("127.0.0.1", 1001, recvQ)
     # send to server that it needs first range
     comm.send_msg(clientProtocol.pack_request_for_more())
-    threading.Thread(target=handle_recv_msgs, args=(recvQ, comm)).start()
+    handle_recv_msgs(recvQ, comm)
 
 
 def new_range_to_check(comm, params):
@@ -32,6 +31,7 @@ def new_range_to_check(comm, params):
     end = int(end)
     for i in range(start, end):
         if hashlib.md5(str(i).encode()).hexdigest() == "EC9C0F7EDCC18A98B1F31853B1813301".lower():
+            print("found", str(i))
             # sends the server that it got the right answer
             comm.send_msg(clientProtocol.pack_right_answer(str(i)))
     #send to server that it needs another range
