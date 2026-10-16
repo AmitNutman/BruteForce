@@ -46,6 +46,7 @@ class ClientComm():
                 data_len = 0
             if data_len == 0:
                 self.close_client()
+                break
             else:
                 data = b""
                 # recv in loop of 1024 every chunk because gets pictures as well

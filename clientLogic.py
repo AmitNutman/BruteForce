@@ -27,15 +27,19 @@ def new_range_to_check(comm, params):
     :return:
     """
     start, end = params
+    print("working on: " + start + "-" + end)
     start = int(start)
     end = int(end)
+    found = False
     for i in range(start, end):
         if hashlib.md5(str(i).encode()).hexdigest() == "EC9C0F7EDCC18A98B1F31853B1813301".lower():
-            print("found", str(i))
+            found = True
             # sends the server that it got the right answer
             comm.send_msg(clientProtocol.pack_right_answer(str(i)))
-    #send to server that it needs another range
-    comm.send_msg(clientProtocol.pack_request_for_more())
+            break
+    if not found:
+        #send to server that it needs another range
+        comm.send_msg(clientProtocol.pack_request_for_more())
 
 
 def answer_found(comm, params):
@@ -45,8 +49,8 @@ def answer_found(comm, params):
     :param params:
     :return:
     """
-    comm.closeClient()
-
+    print("closed")
+    comm.close_client()
 
 commands = {}
 commands['1'] = new_range_to_check
@@ -65,11 +69,10 @@ def handle_recv_msgs(recvQ, comm):
     while True:
         data = recvQ.get()
         opcode, params = clientProtocol.unpack(data)
-        print("opcode:", repr(opcode))
-        print("params:", repr(params))
         if opcode in commands.keys():
             commands[opcode](comm, params)
-
+        if opcode == "2":
+            break
 
 if __name__ == "__main__":
 

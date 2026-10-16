@@ -4,7 +4,7 @@ import serverProtocol
 import threading
 import hashlib
 
-def request_for_new_range_to_check(ip, comm, params, current_range):
+def request_for_new_range_to_check(ip, comm, params, current_range, clients):
    """
 
    :param ip:
@@ -15,18 +15,23 @@ def request_for_new_range_to_check(ip, comm, params, current_range):
    """
    #if there are still numbers that weren't checked
    if current_range[0] < 9999999999:
-        comm.send_msg(ip, serverProtocol.pack_range_to_check(current_range[0], current_range[0]+100000000))
-        current_range[0] = current_range[0] + 100000000
+        clients[ip] = (current_range[0], current_range[0]+10000)
+        comm.send_msg(ip, serverProtocol.pack_range_to_check(current_range[0], current_range[0]+10000))
+        current_range[0] = current_range[0] + 10000
 
-def found_correct_answer(ip, comm, answer, current_range):
+def found_correct_answer(ip, comm, answer, current_range, clients):
     if hashlib.md5(answer[0].encode()).hexdigest() == "EC9C0F7EDCC18A98B1F31853B1813301".lower():
         print(answer[0])
+        for client_ip in clients.keys():
+            comm.send_msg(client_ip, serverProtocol.pack_answer_found())
+    else:
+        pass
 
 commands = {}
 commands['1'] = request_for_new_range_to_check
 commands['2'] = found_correct_answer
 
-def handle_recv_msgs(comm, recvQ, current_range):
+def handle_recv_msgs(comm, recvQ, current_range, clients):
     """
     handles messages based on opcode
     :param comm: the object for communication
@@ -38,7 +43,7 @@ def handle_recv_msgs(comm, recvQ, current_range):
         ip, data = recvQ.get()
         opcode, params = serverProtocol.unpack(data)
         if opcode in commands.keys():
-            commands[opcode](ip, comm, params, current_range)
+            commands[opcode](ip, comm, params, current_range, clients)
 
 
 
@@ -48,4 +53,5 @@ if __name__ == '__main__':
     comm = ServerComm(1001, recvQ)
     #mutebale
     current_range = [1000000000]
-    threading.Thread(target=handle_recv_msgs, args=(comm, recvQ, current_range)).start()
+    clients = {}
+    threading.Thread(target=handle_recv_msgs, args=(comm, recvQ, current_range, clients)).start()

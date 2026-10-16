@@ -124,8 +124,9 @@ class ServerComm():
         :return: None
         """
         if client_soc in self.open_clients.keys():
-            print(f"{self.open_clients[client_soc]} - disconnected")
-            del self.open_clients[client_soc]
+            print(f"{self.open_clients[client_soc][0]} - disconnected")
+            if client_soc in self.open_clients:
+                del self.open_clients[client_soc]
             client_soc.close()
 
 

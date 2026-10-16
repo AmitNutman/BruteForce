@@ -17,3 +17,12 @@ def pack_range_to_check(start, end):
     :return:
     """
     return f"1#!#{start}#!#{end}"
+
+
+
+def pack_answer_found():
+    """
+
+    :return:
+    """
+    return "2"
