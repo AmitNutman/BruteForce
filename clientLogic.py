@@ -9,8 +9,8 @@ import hashlib
 
 def communicate_with_server():
     """
-
-    :return:
+    creates comm to communicate with server and ask for starting range
+    :return: None
     """
     recvQ = queue.Queue()
     comm = ClientComm("127.0.0.1", 1001, recvQ)
@@ -21,10 +21,10 @@ def communicate_with_server():
 
 def new_range_to_check(comm, params):
     """
-
-    :param comm:
-    :param range:
-    :return:
+    checks the range
+    :param comm: the object for communication
+    :param params: tuple - start_range, end_range
+    :return: None
     """
     start, end = params
     print("working on: " + start + "-" + end)
@@ -44,10 +44,10 @@ def new_range_to_check(comm, params):
 
 def answer_found(comm, params):
     """
-
-    :param comm:
+    closes the client because the answer was found
+    :param comm: the object for communication
     :param params:
-    :return:
+    :return: None
     """
     print("closed")
     comm.close_client()
