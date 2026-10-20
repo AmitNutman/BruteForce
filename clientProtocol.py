@@ -11,8 +11,8 @@ def unpack(data):
 
 def pack_right_answer(answer):
     """
-
-    :return:
+    packs the right answer to send to server
+    :return: str
     """
     return f"2#!#{answer}"
 
@@ -20,7 +20,7 @@ def pack_right_answer(answer):
 
 def pack_request_for_more():
     """
-
-    :return:
+    pack the request for another range
+    :return: str - request
     """
     return "1"

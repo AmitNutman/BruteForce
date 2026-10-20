@@ -11,10 +11,10 @@ def unpack(data):
 
 def pack_range_to_check(start, end):
     """
-
-    :param start:
-    :param end:
-    :return:
+    pack the range to send to client
+    :param start: the first number to check on this range
+    :param end: the last number to check on this range
+    :return: str
     """
     return f"1#!#{start}#!#{end}"
 
@@ -22,7 +22,7 @@ def pack_range_to_check(start, end):
 
 def pack_answer_found():
     """
-
-    :return:
+    pack msg to let all clients know answer was found
+    :return: str
     """
     return "2"
