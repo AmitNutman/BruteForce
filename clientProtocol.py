@@ -17,7 +17,6 @@ def pack_right_answer(answer):
     return f"2#!#{answer}"
 
 
-
 def pack_request_for_more():
     """
     pack the request for another range

@@ -19,7 +19,6 @@ def pack_range_to_check(start, end):
     return f"1#!#{start}#!#{end}"
 
 
-
 def pack_answer_found():
     """
     pack msg to let all clients know answer was found
