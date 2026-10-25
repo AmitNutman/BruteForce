@@ -27,3 +27,10 @@ def pack_request_for_more():
     :return: str - request
     """
     return "1"
+
+def pack_connected_msg():
+    """
+    pack the msg to tell server it connected
+    :return: str
+    """
+    return "3"

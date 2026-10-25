@@ -30,3 +30,12 @@ def pack_answer_found():
     :return: str
     """
     return "2"
+
+
+def pack_str_to_look_for(str_to_look_for):
+    """
+    pack msg that has the str that the client need to look for
+    :param str_to_look_for: the str that the client need to look for
+    :return: str
+    """
+    return f"3#!#{str_to_look_for}"

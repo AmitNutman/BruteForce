@@ -69,9 +69,25 @@ def found_correct_answer(ip, comm, answer, current_range, clients, start_time, r
         # remove the client from the clients dictionary
         del clients[ip]
 
+
+def client_connected(ip, comm, params, current_range, clients, start_time, ranges_to_check):
+    """
+    new client connected - send him the str to look for
+    :param ip: the clients ip
+    :param comm: the object for communication
+    :param params: None
+    :param current_range: the next number that needs to be checked
+    :param clients: dict of all clients (client_ip : range that is checking now)
+    :param start_time: the time that it started checking the first range
+    :param ranges_to_check: the q of the ranges that need to be checked again (client sent a wrong answer)
+    :return: None
+    """
+    comm.send_msg(ip, serverProtocol.pack_str_to_look_for("EC9C0F7EDCC18A98B1F31853B1813301"))
+
 commands = {}
 commands['1'] = request_for_new_range_to_check
 commands['2'] = found_correct_answer
+commands['3'] = client_connected
 
 def handle_recv_msgs(comm, recvQ, current_range, clients, start_time, ranges_to_check):
     """
